@@ -6,7 +6,7 @@ import Banner from '../components/Banner'
 
 function Home() {
   return (
-    <div>
+    <div className='mt-5'>
       <Header/>
       <SpecialityMenu/>
       <TopDoctors/>

@@ -82,7 +82,7 @@ function Appointment() {
 
    
   return docInfo && (
-    <div className=''>
+    <div className='mt-5'>
       {/* Doctor Details */}
       <div className='flex flex-col sm:flex-row gap-4'>
         <div>
