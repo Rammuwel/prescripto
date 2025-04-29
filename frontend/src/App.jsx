@@ -11,6 +11,7 @@ import MyProfile from './pages/MyProfile'
 import MyAppoinments from './pages/MyAppoinments'
 import Appointment from './pages/Appointment'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 
 function App() {
 
@@ -27,8 +28,9 @@ function App() {
          <Route path='/contact' element={<Contact/>} />
          <Route path='/my-profile' element={<MyProfile/>}/>
          <Route path='/my-appoinments' element={<MyAppoinments/>}/>
-         <Route path='/appointment' element={<Appointment/>}/>
+         <Route path='/appointment/:docId' element={<Appointment/>}/>
       </Routes>
+      <Footer/>
    </div>
   )
 }
