@@ -1,17 +1,17 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import Login from './pages/Login'
 import { ToastContainer, toast } from 'react-toastify';
 import { AdminContex } from './context/AdminContexr';
 import Navbar from './componets/Navbar';
 import Sidebar from './componets/Sidebar';
 import { Route, Routes } from 'react-router-dom';
-import AllAppointment from './pages/asmin/AllAppointment';
-import Dashboard from './pages/asmin/Dashboard';
-import AddDoctor from './pages/asmin/AddDoctor';
-import DoctorList from './pages/asmin/DoctorList';
+import AllAppointment from './pages/admin/AllAppointment';
+import Dashboard from './pages/admin/Dashboard';
+import AddDoctor from './pages/admin/AddDoctor';
+import DoctorList from './pages/admin/DoctorList';
 
 function App() {
-  const [count, setCount] = useState(0)
+ 
   const { atoken } = useContext(AdminContex)
 
 

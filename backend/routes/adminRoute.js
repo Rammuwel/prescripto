@@ -1,12 +1,15 @@
-import { addDoctor, loginAdmin } from "../controllers/adminController.js";
+import { addDoctor, allDoctors, loginAdmin } from "../controllers/adminController.js";
 import express from 'express';
 import upload from "../middlewars/multer.js";
 import authAdmin from "../middlewars/authAdmin.js";
+import { changeAvailability } from "../controllers/doctorController.js";
 
 
 const adminRouter = express.Router()
 
 adminRouter.post('/add-doctor', authAdmin, upload.single('image') ,addDoctor);
 adminRouter.post('/login',loginAdmin);
+adminRouter.get('/get-doctors',authAdmin, allDoctors);
+adminRouter.post('/change-availability',authAdmin, changeAvailability);
 
 export default adminRouter;

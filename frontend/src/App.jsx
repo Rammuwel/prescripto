@@ -1,5 +1,5 @@
 
-
+import { ToastContainer } from 'react-toastify';
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
@@ -19,6 +19,7 @@ function App() {
   return (
    <div className='mx-4 sm:mx-[10%]'>
       <Navbar/>
+      <ToastContainer />
       <Routes>
          <Route path='/' element={<Home/>} />
          <Route path='/doctors' element={<Doctors/>} />
