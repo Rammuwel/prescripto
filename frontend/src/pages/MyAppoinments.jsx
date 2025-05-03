@@ -2,9 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../contexts/AppContext'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import {useNavigate} from 'react-router-dom'
 
 function MyAppoinments() {
-
+  const navigate = useNavigate()
   const { token, backendUrl, getDoctorsData} = useContext(AppContext)
   
   const [appointments, setAppointments] = useState([]);
@@ -49,6 +50,50 @@ function MyAppoinments() {
       toast.error(error.message)
     }
   }
+  // first add javascript link from razorpay in index.html file
+   // init payment config..
+   const initPay = (order)=>{
+        const options = {
+          key: '' ,//razor pay kry id
+          amount: order.currency,
+          name: 'Appointment Payment',
+          description: 'Appointment Payment',
+          order_id: order.id,
+          receipt: order.receipt,
+          handler: async (response)=>{
+            console.log(response)
+            try {
+              const {data} = await axios.post(backendUrl + '/api/user/verify-razorpay', response, {headers:{token}})
+            
+              if(data.success){
+                  toast.success(data.message)
+                  navigate('/my-appointments')
+                  
+              }else{
+                toast.error(data.message)
+                navigate('/my-appointments')
+              }
+            } catch (error) {
+              console.log(error.message)
+            }
+          }
+        }
+
+        const rxp = new window.Razorpay(options)
+        rzp.open()
+   }
+
+  // razorpay payment api call
+
+  const appointmentRazorPay = async(req, res)=>{
+         try {
+           if(data.success){
+              initPay(data.order)
+           }
+         } catch (error) {
+           console.log(error.message)
+         }
+  }
 
   useEffect(()=>{
     if(token){
@@ -76,6 +121,7 @@ function MyAppoinments() {
                 </div>
                 <div></div>
                 <div className='flex flex-col gap-2 justify-end'>
+                 {!item.cancelled && item.payment && <button className='text-sm bg-indigo-50 text-stone-500 text-center sm:min-w-48 py-2 border rounded'>Paid</button>}
                  {!item.cancelled &&  <button className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-primary hover:text-white transition-all duration-500'>Pay Online</button>}
                   {!item.cancelled && <button onClick={()=>cancelAppointment(item._id)} className='text-sm text-stone-500 text-center sm:min-w-48 py-2 border rounded hover:bg-red-600 hover:text-white transition-all duration-500'>Cancel appointment</button>}
                   {item.cancelled && <button className='text-sm text-red-400 text-center sm:min-w-48 py-2 border rounded border-red-400'>Appointment cancelled</button>}

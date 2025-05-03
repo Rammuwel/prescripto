@@ -11,7 +11,8 @@ const AdminContexProvider = (props)=>{
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
     const [doctors, setDoctors] = useState([])
- 
+    const [appointments, setAppointments] = useState([])
+
   const getAllDocters = async ()=>{
     try {
       const {data} = await axios.get(backendUrl + '/api/admin/get-doctors', {headers:{atoken}})
@@ -25,7 +26,24 @@ const AdminContexProvider = (props)=>{
     }
   }
 
+  // api call for geting all apointments
+  const getAllAppointments = async ()=>{
+    try {
+      
+      const {data} = await axios.get(backendUrl + '/api/admin/appointments', {headers:{atoken}})
 
+      if(data.success){
+        setAppointments(data.appointments);
+        console.log(data.appointments)
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  
   const changeAvailability = async (docId)=>{
     try {
       const {data} = await axios.post(backendUrl+'/api/admin/change-availability', {docId}, {headers:{atoken}})
@@ -41,6 +59,21 @@ const AdminContexProvider = (props)=>{
   }
 
 
+  // cancel appointment api call
+   const canncelAppointment = async (appointmentId)=>{
+    try {
+      const {data} = await axios.post(backendUrl + '/api/admin/cancel-appointments', {appointmentId}, {headers:{atoken}})
+
+      if(data.success){
+           toast.success(data.message)
+           getAllAppointments()
+      }else{
+        toast.error(data.message)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+   }
 
 
     const value = {
@@ -48,6 +81,9 @@ const AdminContexProvider = (props)=>{
          backendUrl,
          doctors, getAllDocters,
          changeAvailability,
+         getAllAppointments,
+         appointments, setAppointments,
+         canncelAppointment
     }
 
     return (
