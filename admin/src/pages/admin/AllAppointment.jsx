@@ -46,6 +46,7 @@ function AllAppointment() {
                 {
                   item.cancelled
                   ? <p className='text-red-500 text-xs font-medium'>Cacelled</p>
+                  : item.isCompleted? <p className='text-green-500 text-xs font-medium'>Completed</p>
                   :<img className=' cursor-pointer hover:scale-[80%] transition'  onClick={()=>canncelAppointment(item._id)} src={assets.cancel_icon} alt="" />
                 
                 }
