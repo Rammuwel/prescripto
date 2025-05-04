@@ -12,6 +12,8 @@ const AdminContexProvider = (props)=>{
 
     const [doctors, setDoctors] = useState([])
     const [appointments, setAppointments] = useState([])
+    const [dashData, setDashData] = useState({})
+
 
   const getAllDocters = async ()=>{
     try {
@@ -76,6 +78,24 @@ const AdminContexProvider = (props)=>{
    }
 
 
+   // api call to dashboard data
+    const getDashData = async ()=>{
+      try {
+        
+        const {data} = await axios.get(backendUrl + '/api/admin/dashboard', {headers:{atoken}})
+
+        if(data.success){
+           setDashData(data.dashData)
+           console.log(data.dashData)
+        }else{
+          toast.error(data.message)
+        }
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+
+  
     const value = {
          atoken, setAtoken,
          backendUrl,
@@ -83,7 +103,9 @@ const AdminContexProvider = (props)=>{
          changeAvailability,
          getAllAppointments,
          appointments, setAppointments,
-         canncelAppointment
+         canncelAppointment,
+         getDashData,dashData
+
     }
 
     return (
