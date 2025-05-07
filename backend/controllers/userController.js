@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import userModel from '../models/userModel.js';
 import jwt from 'jsonwebtoken'
 import validator from 'validator'
@@ -6,7 +6,7 @@ import { v2 as cloudinary } from 'cloudinary'
 import doctorModel from '../models/doctorModel.js';
 import appointmentModel from '../models/appointmentModel.js';
 import razarpay from 'razorpay'
-import Razorpay from 'razorpay';
+
 
 const registerUser = async (req, res) => {
     try {
@@ -38,7 +38,7 @@ const registerUser = async (req, res) => {
 
         const newUser = new userModel(userData)
         const user = await newUser.save()
-        console.log(user)
+    
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET)
 
         return res.json({ success: true, token })
@@ -113,7 +113,7 @@ const updateProfile = async (req, res) => {
         const userId = req.userId
         const imageFile = req.file
         const { name, phone, address, dob, gender } = req.body
-        console.log(req.body)
+       
         if (!name || !phone || !dob || !gender) {
             return res.json({ success: false, message: "Data Missing" })
         }
