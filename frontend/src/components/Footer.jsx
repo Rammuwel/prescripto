@@ -25,6 +25,7 @@ function Footer() {
                   <ul className='flex flex-col gap-2 text-gray-600'>
                      <li>+0-000-000-000</li>
                      <li>prescript@info.in</li>
+                     <li><a href="https://prescripto-admin-8tzx.onrender.com">Go to Admin Login</a>></li>
                   </ul>
                 </div>
             </div>
